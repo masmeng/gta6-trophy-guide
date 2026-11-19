@@ -1,0 +1,279 @@
+/* Leonida Trophy Guide — own look: deep night navy, neon pink sunset accent, cyan highlights. */
+:root {
+  --bg: #0d1026;
+  --bg-soft: #151a3d;
+  --card: #1a2050;
+  --card-edge: #2c3570;
+  --ink: #f2f3ff;
+  --ink-dim: #aab0d6;
+  --pink: #ff2e88;
+  --pink-soft: #ff7ab8;
+  --cyan: #2fd8f0;
+  --gold: #f5c542;
+  --silver: #c3cad6;
+  --bronze: #d08a4e;
+  --platinum: #8ef1ff;
+  --good: #3ddc84;
+  --warn: #ffb020;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1100px 480px at 85% -10%, rgba(255, 46, 136, 0.28), transparent 60%),
+    radial-gradient(900px 500px at -10% 0%, rgba(47, 216, 240, 0.16), transparent 55%),
+    var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.55;
+}
+
+a { color: var(--cyan); }
+a:visited { color: var(--pink-soft); }
+
+.masthead {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 20px 8px;
+}
+
+.kicker {
+  margin: 0 0 6px;
+  color: var(--cyan);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0 0 10px;
+  font-size: clamp(2rem, 6vw, 3.1rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  background: linear-gradient(92deg, #fff 20%, var(--pink-soft) 55%, var(--cyan) 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lede { max-width: 62ch; color: var(--ink-dim); margin: 0 0 18px; }
+
+.progress-wrap { max-width: 620px; }
+.progress-line {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.progress-bar {
+  height: 12px;
+  margin-top: 6px;
+  background: var(--bg-soft);
+  border: 1px solid var(--card-edge);
+  border-radius: 999px;
+  overflow: hidden;
+}
+#progressFill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--pink), var(--cyan));
+  transition: width 0.25s ease;
+}
+.platinum-note { color: var(--ink-dim); font-size: 0.92rem; }
+
+main { max-width: 960px; margin: 0 auto; padding: 12px 20px 30px; }
+
+h2 { font-size: 1.35rem; margin: 26px 0 10px; }
+
+.roadmap .stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+}
+.roadmap .stages li {
+  background: var(--card);
+  border: 1px solid var(--card-edge);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+.roadmap .stages strong { display: block; font-size: 1.02rem; }
+.hours {
+  display: inline-block;
+  margin: 4px 0 6px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--cyan);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.roadmap .stages p { margin: 0; color: var(--ink-dim); font-size: 0.94rem; }
+.stage-count { display: block; margin-top: 8px; font-size: 0.85rem; color: var(--ink-dim); }
+
+.missable-banner {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--warn);
+  border-left-width: 6px;
+  border-radius: var(--radius);
+  background: rgba(255, 176, 32, 0.09);
+}
+.missable-banner p { margin: 6px 0 0; color: var(--ink-dim); }
+.missable-banner strong { color: var(--warn); }
+
+.controls { margin-top: 8px; }
+.search-row label { display: block; font-weight: 700; margin-bottom: 5px; }
+.search-row input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--card-edge);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  color: var(--ink);
+  font-size: 1rem;
+}
+.search-row input::placeholder { color: #7c84b3; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.chip {
+  padding: 7px 14px;
+  border: 1px solid var(--card-edge);
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--ink);
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+.chip:hover { border-color: var(--cyan); }
+.chip.active { background: var(--pink); border-color: var(--pink); color: #fff; font-weight: 700; }
+
+.toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+.toggle { display: flex; gap: 8px; align-items: flex-start; max-width: 520px; cursor: pointer; }
+.toggle input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--pink); }
+.toggle span { font-size: 0.93rem; color: var(--ink-dim); }
+
+.file-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.file-buttons button {
+  padding: 8px 14px;
+  border: 1px solid var(--card-edge);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 0.92rem;
+}
+.file-buttons button:hover { border-color: var(--cyan); }
+#resetBtn { color: #ffb3c8; }
+
+.result-line { color: var(--ink-dim); font-size: 0.92rem; margin: 12px 0 0; }
+
+.trophy-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.trophy {
+  background: var(--card);
+  border: 1px solid var(--card-edge);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.trophy.earned { border-color: var(--good); }
+.trophy.missable-flag { border-color: var(--warn); }
+.trophy-head { display: flex; gap: 10px; align-items: flex-start; }
+.grade-dot {
+  flex: 0 0 auto;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #10122a;
+}
+.grade-platinum { background: linear-gradient(135deg, #d9fbff, var(--platinum)); }
+.grade-gold { background: var(--gold); }
+.grade-silver { background: var(--silver); }
+.grade-bronze { background: var(--bronze); color: #fff; }
+.trophy-head h3 { margin: 0; font-size: 1.05rem; line-height: 1.25; }
+.trophy-head .desc { margin: 2px 0 0; color: var(--ink-dim); font-size: 0.92rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--ink-dim);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.tag.warn { background: rgba(255, 176, 32, 0.16); color: var(--warn); }
+.tag.spoiler { background: rgba(255, 46, 136, 0.16); color: var(--pink-soft); }
+.guide { margin: 0; font-size: 0.95rem; }
+.guide strong { color: var(--cyan); }
+.sources { font-size: 0.84rem; color: var(--ink-dim); }
+.sources ul { margin: 2px 0 0; padding-left: 18px; }
+.sources li { margin: 1px 0; }
+.earn-row { margin-top: auto; display: flex; align-items: center; gap: 8px; }
+.earn-row input { width: 18px; height: 18px; accent-color: var(--good); }
+.earn-row label { cursor: pointer; font-weight: 700; font-size: 0.93rem; }
+.earn-row .earned-at { margin-left: auto; font-size: 0.8rem; color: var(--good); }
+.spoiler-cover {
+  border: 1px dashed var(--pink);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--pink-soft);
+  font-size: 0.92rem;
+}
+.online-note {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--card-edge);
+  border-radius: var(--radius);
+}
+.online-note h2 { margin-top: 0; }
+.online-note p { color: var(--ink-dim); margin: 0; }
+
+footer {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+  color: var(--ink-dim);
+  font-size: 0.88rem;
+}
+footer code { color: var(--ink); }
+.foot-meta { color: #7c84b3; }
+
+.empty {
+  grid-column: 1 / -1;
+  padding: 22px;
+  text-align: center;
+  color: var(--ink-dim);
+  border: 1px dashed var(--card-edge);
+  border-radius: var(--radius);
+}
+
+@media (max-width: 560px) {
+  .toggles { flex-direction: column; align-items: flex-start; }
+}

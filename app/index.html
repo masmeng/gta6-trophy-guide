@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leonida Trophy Guide — GTA VI Platinum Roadmap</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="masthead">
+  <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; Unofficial fan guide</p>
+  <h1>Leonida Trophy Guide</h1>
+  <p class="lede">All 55 trophies, a real roadmap to the platinum, and a tracker that remembers your progress. About 200 hours, one playthrough, zero online trophies — and exactly one trophy that can be missed.</p>
+  <div class="progress-wrap" aria-label="Trophy progress">
+    <div class="progress-line"><span id="progressText">0 / 55 earned</span><span id="progressPct">0%</span></div>
+    <div class="progress-bar"><div id="progressFill"></div></div>
+  </div>
+  <p class="platinum-note" id="platinumNote">Earn the other 54 and the platinum, Vice Got a Price!, pops on its own.</p>
+</header>
+
+<main>
+  <section class="roadmap" aria-label="Roadmap to platinum">
+    <h2>Roadmap to platinum &mdash; ~200 hours</h2>
+    <ol class="stages">
+      <li data-stage="1">
+        <strong>Stage 1 &middot; The story</strong>
+        <span class="hours">60&ndash;80 hours</span>
+        <p>Play the 5 chapters, do the side-character questlines as they appear, scan vehicles and study animals as you go, and meditate at every spot. Everything in this stage is available during the story — except one meditation in Chapter 1 (see the warning below).</p>
+        <span class="stage-count" id="stageCount1"></span>
+      </li>
+      <li data-stage="2">
+        <strong>Stage 2 &middot; The 100% checklist</strong>
+        <span class="hours">~100 hours</span>
+        <p>After the story, the checklist opens under Progress &gt; Stats &gt; 100% Completion. It is lenient — about 60% true completion — but it is the long grind: stunts, races, ranges, cards, challenges and every robbery.</p>
+        <span class="stage-count" id="stageCount2"></span>
+      </li>
+      <li data-stage="3">
+        <strong>Stage 3 &middot; Cleanup</strong>
+        <span class="hours">~10 hours</span>
+        <p>Strangers &amp; Freaks strands, the last few miscellaneous trophies, and the four trophies whose unlock method the community has not confirmed yet. Then the platinum.</p>
+        <span class="stage-count" id="stageCount3"></span>
+      </li>
+    </ol>
+    <div class="missable-banner" role="alert">
+      <strong>&#9888; The one missable trophy</strong>
+      <p><strong>Positive Mental Attitude</strong> — the first meditation can only happen in Chapter 1 at Jason&rsquo;s house. After the mission Down to Earth, talk to Lucia in the kitchen in the morning, follow her to the balcony and choose Accept. It is not yet clear whether that first meditation counts toward the trophy, so do it while you can. No other trophy is missable, and cheats disable trophies, so leave them off.</p>
+    </div>
+  </section>
+
+  <section class="controls" aria-label="Tracker controls">
+    <div class="search-row">
+      <label for="search">Search trophies</label>
+      <input id="search" type="search" placeholder="Type a trophy name, mission or keyword…" autocomplete="off">
+    </div>
+    <div class="filters" role="group" aria-label="Filter by kind">
+      <button class="chip active" data-filter="all" type="button">All 55</button>
+      <button class="chip" data-filter="story" type="button">Story</button>
+      <button class="chip" data-filter="missable" type="button">Missable</button>
+      <button class="chip" data-filter="collectibles" type="button">Collectibles</button>
+      <button class="chip" data-filter="activities" type="button">Activities</button>
+      <button class="chip" data-filter="online" type="button">Online</button>
+      <button class="chip" data-filter="earned" type="button">Earned</button>
+      <button class="chip" data-filter="todo" type="button">Not earned</button>
+    </div>
+    <div class="toggles">
+      <label class="toggle">
+        <input id="spoilerToggle" type="checkbox" checked>
+        <span>Hide story spoilers — hidden trophy names and descriptions stay covered until you earn them</span>
+      </label>
+      <div class="file-buttons">
+        <button id="exportBtn" type="button">Export progress</button>
+        <button id="importBtn" type="button">Import progress</button>
+        <input id="importFile" type="file" accept="application/json,.json" hidden>
+        <button id="resetBtn" type="button">Reset</button>
+      </div>
+    </div>
+    <p class="result-line" id="resultLine"></p>
+  </section>
+
+  <section class="trophy-list" id="trophyList" aria-live="polite"></section>
+
+  <section class="online-note" id="onlineNote" hidden>
+    <h2>No online trophies</h2>
+    <p>All 55 trophies are offline single-player. There is nothing to earn in multiplayer, and no DLC trophy is required for the platinum.</p>
+  </section>
+</main>
+
+<footer>
+  <p>Sources: every guide cites its sources beside it — the official trophy list as published on PlayStation Network, cross-checked on Exophase, PSNProfiles and TrueAchievements, and the unlock methods from PowerPyx&rsquo;s GTA 6 Trophy Guide &amp; Roadmap. Only the official trophy names and descriptions are quoted; the guides themselves are written in our own words.</p>
+  <p>Unofficial fan guide. Not affiliated with Rockstar Games, Sony or PlayStation. No Rockstar artwork, logos or game screenshots are used here.</p>
+  <p class="foot-meta">Data: <code>app/data/trophies.json</code> &middot; 55 trophies &middot; 1 platinum, 2 gold, 6 silver, 46 bronze &middot; 27 visible, 28 hidden.</p>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
