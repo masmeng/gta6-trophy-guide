@@ -1,40 +1,44 @@
-// Tiny static server for previewing the guide while you build it.
-// Serves app/ on http://localhost:8080 with no build step and no network.
-// Not part of the handed-in entry's runtime — the guide is plain files.
+// Leonida Trophy Guide — tiny static server for local use.
+//
+// Serves app/ at its root on port 8080 so the guide can be tried in a
+// desktop browser. Node 22 standard library only.
+//
+//   node serve.ts
+//   -> http://localhost:8080
 
-import { createServer } from "node:http";
-import { readFile } from "node:fs/promises";
-import { join, extname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { createReadStream, existsSync, statSync } from 'node:fs';
+import { createServer } from 'node:http';
+import { extname, join, normalize, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root = fileURLToPath(new URL("./app", import.meta.url));
+const appDir = resolve(join(new URL('.', import.meta.url).pathname, 'app'));
 const port = Number(process.env.PORT ?? 8080);
 
-const types: Record<string, string> = {
-  ".html": "text/html; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".js": "text/javascript; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
+const mimeByExt: Record<string, string> = {
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
+  '.mjs': 'text/javascript; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.png': 'image/png',
+  '.svg': 'image/svg+xml',
 };
 
-const server = createServer(async (req, res) => {
-  const path = req.url === "/" || !req.url ? "/index.html" : req.url.split("?")[0];
-  const file = join(root, path);
-  if (!file.startsWith(root)) {
-    res.writeHead(403);
-    res.end("forbidden");
+const server = createServer((req, res) => {
+  const raw = decodeURIComponent(new URL(req.url ?? '/', 'http://localhost').pathname);
+  const target = resolve(join(appDir, normalize(raw).replace(/^(\.\.[/\\])+/, '')));
+  const file = target === appDir ? join(appDir, 'index.html') : target;
+  if (!file.startsWith(appDir) || !existsSync(file) || !statSync(file).isFile()) {
+    res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' });
+    res.end('not found\n');
     return;
   }
-  try {
-    const body = await readFile(file);
-    res.writeHead(200, { "content-type": types[extname(file)] ?? "application/octet-stream" });
-    res.end(body);
-  } catch {
-    res.writeHead(404);
-    res.end("not found");
-  }
+  res.writeHead(200, { 'content-type': mimeByExt[extname(file)] ?? 'application/octet-stream' });
+  createReadStream(file).pipe(res);
 });
 
 server.listen(port, () => {
-  console.log(`Leonida Trophy Guide at http://localhost:${port}`);
+  console.log(`serve.ts: Leonida Trophy Guide at http://localhost:${port}`);
 });

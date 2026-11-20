@@ -1,40 +1,41 @@
-// Leonida Trophy Guide — hand-in program (Node 22, standard library only).
-// The guide itself is plain static files in app/ (index.html, style.css,
-// app.js, data/trophies.json) that a browser opens with no build step and no
-// network. This program copies app/ and screenshots/ into the output
-// directory and writes dossier.json with the vendored make.fun library.
-// The scorer re-runs that same library on the handed-in files and requires
-// dossier.json to match byte for byte, so the caps below mirror the gate.
+// Leonida Trophy Guide — entrypoint.
 //
-// Run it locally with:
-//   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
+// Copies app/ and screenshots/ into the output directory and writes
+// /output/dossier.json with buildDossier from the kit's vendored
+// library. Node 22 standard library only, no build step.
+//
+//   MAKEFUN_OUTPUT_DIR=out node main.ts
+//
+// Without MAKEFUN_OUTPUT_DIR the output goes to /output.
 
-import { cpSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
-import { fileURLToPath } from "node:url";
-import { buildDossier } from "./vendor/makefun-frontend.min.js";
+import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { buildDossier } from './vendor/makefun-frontend.ts';
 
-const root = fileURLToPath(new URL(".", import.meta.url));
-const destination = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
+const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)));
+const outDir = resolve(process.env.MAKEFUN_OUTPUT_DIR ?? '/output');
 
-mkdirSync(destination, { recursive: true });
-cpSync(join(root, "app"), join(destination, "app"), { recursive: true });
-
-const shotDir = join(destination, "screenshots");
-mkdirSync(shotDir, { recursive: true });
-const localShots = join(root, "screenshots");
-if (existsSync(localShots)) {
-  cpSync(localShots, shotDir, { recursive: true });
-}
-
-// Caps from the competition gate: the guide text is capped at 160 KiB,
-// at most 4 screenshots of at most 256 KiB each, app/ holds at most 993
-// entries and 48 MiB in total. Only the text cap shapes the dossier bytes;
-// the rest refuse an entry the scorer would refuse.
-const dossier = buildDossier(destination, {
+const dossierCaps = {
   text_max_bytes: 163840,
   screenshots: { max: 4, max_bytes: 262144 },
   app_max_files: 993,
-  app_max_bytes: 50331648,
-});
-writeFileSync(join(destination, "dossier.json"), dossier);
+  app_max_bytes: 16777216,
+};
+
+function copyTree(name: string): void {
+  const from = join(repoRoot, name);
+  const to = join(outDir, name);
+  if (!existsSync(from)) throw new Error(`main.ts: ${name}/ is missing from the repository`);
+  rmSync(to, { recursive: true, force: true });
+  cpSync(from, to, { recursive: true });
+}
+
+mkdirSync(outDir, { recursive: true });
+copyTree('app');
+copyTree('screenshots');
+console.log(`main.ts: copied app/ and screenshots/ into ${outDir}`);
+
+const dossier = buildDossier(outDir, dossierCaps);
+writeFileSync(join(outDir, 'dossier.json'), dossier);
+console.log(`main.ts: wrote ${outDir}/dossier.json (${dossier.length} bytes)`);
